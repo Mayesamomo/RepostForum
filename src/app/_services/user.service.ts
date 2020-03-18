@@ -10,13 +10,14 @@ import { map } from 'rxjs/operators';
 export class UserService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  isLoggedIn: boolean;
   constructor(private http: HttpClient) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Content-Type': 'text,plain'
     })
   };
 
@@ -37,18 +38,18 @@ export class UserService {
     }));
   }
 
-  login(details) {
-    let reg = this.Apiurl + "/login"
-    let jsonStr = JSON.stringify(details);
-    console.log(jsonStr);
-    return this.http.post<User>(reg, jsonStr).pipe(map(user => {
-      sessionStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUserSubject.next(user);
+  login(username: string, password: string) {
 
-      return user;
-
-
-    }));
+    return this.http.post<any>(this.Apiurl + "/login", { username, password }, this.httpOptions)
+      .pipe(map(user => {
+        if (user) {
+          // store user details in local storage to keep user logged in
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          this.isLoggedIn = true;
+        }
+        return user;
+      }));
   }
   editUserDetails(details) {
     let reg = this.Apiurl + "/editUser"
@@ -57,10 +58,7 @@ export class UserService {
       sessionStorage.setItem('currentUser', JSON.stringify(user));
       this.currentUserSubject.next(null);
       this.currentUserSubject.next(user);
-
       return user;
-
-
     }));
   }
 
@@ -68,5 +66,10 @@ export class UserService {
     // remove user from session storage and set current user to null
     sessionStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+    this.isLoggedIn = false;
+  }
+  userIsLoggedIn() {
+    console.log("Userservice.IsLoggedIn", this.isLoggedIn);
+    return this.isLoggedIn;
   }
 }

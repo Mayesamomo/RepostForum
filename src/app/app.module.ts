@@ -26,6 +26,7 @@ import { ViewPostComponent } from './_components/post/view-post/view-post.compon
 import { LoginComponent } from './_components/user/login/login.component';
 import { RegisterComponent } from './_components/user/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { JwtInterceptor } from './_helper/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [AuthGuard, { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
+  providers: [AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
