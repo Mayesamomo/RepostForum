@@ -31,7 +31,7 @@ export class Post {
             this.status = status,
             this.userName = userName,
             this.communityName = communityName,
-            this.votes = votes
+            this.votes = votes || 0;
     }
     VoteUp() {
         this.votes += 1;

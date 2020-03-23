@@ -38,19 +38,19 @@ export class UserService {
     }));
   }
 
-  login(username: string, password: string) {
-
-    return this.http.post<any>(this.Apiurl + "/login", { username, password }, this.httpOptions)
-      .pipe(map(user => {
-        if (user) {
-          // store user details in local storage to keep user logged in
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          this.isLoggedIn = true;
-        }
-        return user;
-      }));
-  }
+  /**  login(username: string, password: string) {
+ 
+     return this.http.post<any>(this.Apiurl + "/login", { username, password }, this.httpOptions)
+       .pipe(map(user => {
+         if (user) {
+           // store user details in local storage to keep user logged in
+           localStorage.setItem('currentUser', JSON.stringify(user));
+           this.currentUserSubject.next(user);
+           this.isLoggedIn = true;
+         }
+         return user;
+       }));
+   }**/
   editUserDetails(details) {
     let reg = this.Apiurl + "/editUser"
     let jsonStr = JSON.stringify(details);
@@ -62,14 +62,14 @@ export class UserService {
     }));
   }
 
-  logout() {
-    // remove user from session storage and set current user to null
-    sessionStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.isLoggedIn = false;
-  }
-  userIsLoggedIn() {
-    console.log("Userservice.IsLoggedIn", this.isLoggedIn);
-    return this.isLoggedIn;
-  }
+  /** logout() {
+     // remove user from session storage and set current user to null
+     sessionStorage.removeItem('currentUser');
+     this.currentUserSubject.next(null);
+     this.isLoggedIn = false;
+   }
+   userIsLoggedIn() {
+     console.log("Userservice.IsLoggedIn", this.isLoggedIn);
+     return this.isLoggedIn;
+   }**/
 }

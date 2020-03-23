@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/DTO/user';
 import { UserService } from 'src/app/_services/user.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,7 @@ import { UserService } from 'src/app/_services/user.service';
 export class HeaderComponent implements OnInit {
   currentUser: User;
   constructor(private router: Router,
-    private authService: UserService) {
+    private authService: AuthService) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 

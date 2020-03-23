@@ -7,7 +7,7 @@
                     <h4>Login</h4>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                         <div class="form-group row">
                             <label for="user_name" class="col-md-4 col-form-label text-md-right">Username</label>
                             <div class="col-md-6">
@@ -31,7 +31,7 @@
                             <span style="padding-left: 15px">New to REPOSTIT? <a routerLink="/signup">SIGN
                                     UP</a></span>
                         </span>
-                        <div class="login-failed" *ngIf='!this.isError'>
+                        <div class="login-failed" *ngIf='!this.error'>
                             <p class="login-failed-text">Login Failed. Please check your credentials and try again.</p>
                         </div>
                     </form>

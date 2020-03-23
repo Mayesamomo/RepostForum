@@ -1,48 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { AuthService } from '../_services/auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    constructor(private router: Router) { }
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    constructor(private authenticationService: AuthService) { }
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        // add authorization header with basic auth credentials if available
+        const currentUser = this.authenticationService.currentUserValue;
+        if (currentUser && currentUser.authdata) {
+            req = req.clone({
+                setHeaders: {
+                    Authorization: `Basic ${currentUser.authdata}`
+                }
+            });
+        }
 
-        const token = localStorage.getItem('token');
-        if (token) {
-            request = request.clone({
-                setHeaders: {
-                    'Authorization': token
-                }
-            });
-        }
-        if (!request.headers.has('Content-Type')) {
-            request = request.clone({
-                setHeaders: {
-                    'content-type': 'application/json'
-                }
-            });
-        }
-        request = request.clone({
-            headers: request.headers.set('Accept', 'application/json')
-        });
-        return next.handle(request).pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
-                }
-                return event;
-            }),
-            catchError((error: HttpErrorResponse) => {
-                console.log(error);
-                if (error.status === 401) {
-                    this.router.navigate(['login']);
-                }
-                if (error.status === 400) {
-                    alert(error.error);
-                }
-                return throwError(error);
-            }));
+        return next.handle(req);
     }
+
 }

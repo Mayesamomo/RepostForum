@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PostService } from 'src/app/_services/post.service';
+import { Router } from '@angular/router';
+import { Post } from 'src/app/DTO/post';
 
 @Component({
   selector: 'app-home',
@@ -6,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  posts: Post[] = [];
+  constructor(private postService: PostService, private router: Router) { }
 
   ngOnInit(): void {
   }
