@@ -15,7 +15,8 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class VotebuttonComponent implements OnInit {
   @Input() post: Post;
   votePayload: Vote;
-
+  faArrowUp = faArrowUp;
+  faArrowDown = faArrowDown;
   upvoteColor: string;
   downvoteColor: string;
   votes: { voteType: any; postId: any; };

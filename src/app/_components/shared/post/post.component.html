@@ -1,6 +1,6 @@
-<div class="row">
+<div class="row post">
     <div class="col-md-1">
-        <votebutton [post]="post"></votebutton>
+        <app-votebutton [post]="post"></app-votebutton>
     </div>
     <div class="col-md-11">
         <span class="subreddit-info">
@@ -18,7 +18,7 @@
         <hr />
         <span>
             <a class="btnCommments" role="button">
-                <i class="fas fa-comments"></i>
+                <fa-icon [icon]="faComments"></fa-icon>
                 Comments({{post.commentNum}})
             </a>
             <button class="login" (click)="goToPost(post.postId)">

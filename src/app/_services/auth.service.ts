@@ -13,6 +13,7 @@ export class AuthService {
       'Content-Type': 'text,plain'
     })
   };
+  //isLoggedIn: boolean;
   users: User;
   Apiurl: string = "http://localhost:8080/WebApp/webresources/User";
   private currentUserSubject: BehaviorSubject<User>;
@@ -40,5 +41,8 @@ export class AuthService {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+  isLoggedIn() {
+    return localStorage.getItem('currentUser');
   }
 }

@@ -12,8 +12,7 @@ export class Post {
     upVote: boolean;
     downVote: boolean;
     commentNum: number;
-
-    public constructor(
+    /*public constructor(
         postId: number,
         userId: number,
         postTitle: string,
@@ -41,11 +40,5 @@ export class Post {
         this.commentNum = commentNum;
         this.upVote = upVote;
         this.downVote = downVote;
-    }
-    /*upVote() {
-        this.votes += 1;
-    }
-    downVote() {
-        this.votes -= 1;
     }*/
 }

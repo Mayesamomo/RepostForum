@@ -3,51 +3,43 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Post } from '../DTO/post';
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'text/plain'
-  })
-}
-
+import { CreatePostPayload } from '../_components/posts/create-post/createPostPayLoad';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
+  posts: Post[];
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'text/plain'
+    })
+  }
+
   postUrl: string = 'http://localhost:8080/WebApp/webresources/Post';
   commentUrl: string = 'http://localhost:8080/WebApp/webresources/Comment';
-
-  posts: Post[] = [];
-
-  constructor(private http: HttpClient,
+  constructor(private http: HttpClient
   ) { }
 
-  getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.postUrl + "/GetAllPost");
+  getAllPosts(): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/GetAllPost');
   }
 
-  CreatePost(details: Post) {
-    let jsonStr = JSON.stringify(details);
-    return this.http.post<any>(this.postUrl, jsonStr);
-  };
-
-
-
-
-  getPostById(postId) {
-    let url = this.postUrl + "/singlePost/" + postId;
-    return this.http.get<Post[]>(url);
+  createPost(postPayload: CreatePostPayload): Observable<any> {
+    return this.http.post('http://localhost:8080/WebApp/webresources/Post', postPayload);
   }
 
-  getCommentsOfPost(postId) {
-    let url = this.commentUrl + '/commentsOfPost/' + postId;
-    return this.http.get<Comment[]>(url);
+  getPostById(postId: Number): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/singlePost/{postId}' + postId);
   }
 
-  postComment(details) {
-    let jsonStr = JSON.stringify(details);
-    return this.http.post<any>(this.commentUrl, jsonStr);
+  getPostComments(postId: number): Observable<Comment[]> {
+
+    return this.http.get<Comment[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfPost/' + postId);
+  }
+
+  postComment(commentPayload: Comment): Observable<any> {
+    return this.http.post<any>('http://localhost:8080/WebApp/webresources/Comment', commentPayload);
   }
 
 
@@ -58,6 +50,7 @@ export class PostService {
     return this.http.put(url, this.posts);
 
   }
+
 
   getCommentByUserId(userId: Number) {
     console.log("userId: " + userId);
@@ -74,8 +67,14 @@ export class PostService {
 
   }
 
-  getAllComments(): Observable<Comment[]> {
-    return this.http.get<Comment[]>(this.commentUrl);
+  getAllComments(postId: Number): Observable<Comment[]> {
+    return this.http.get<Comment[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfPost/' + postId);
   }
 
+  getAllPostsByCommunity(communityId: Number): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/getPostByCommunityId/' + communityId);
+  }
+  getAllCommentsByUser(commentId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfUser/' + commentId);
+  }
 }

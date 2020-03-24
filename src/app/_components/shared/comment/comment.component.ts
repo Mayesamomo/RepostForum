@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-comment',
+  selector: 'comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.css']
 })
 export class CommentComponent implements OnInit {
-
+  @Input() data: Comment[];
   constructor() { }
 
   ngOnInit(): void {

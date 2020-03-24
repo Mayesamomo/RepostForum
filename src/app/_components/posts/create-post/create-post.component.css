@@ -1,0 +1,11 @@
+.btnCreatePost, .btnCreateSubreddit{
+    margin-top: 5px;
+}
+
+.post-form{
+    margin: 2px;
+}
+
+.comment-notification{
+    margin-top: 5px;
+}

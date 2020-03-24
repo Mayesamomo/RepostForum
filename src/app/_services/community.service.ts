@@ -13,19 +13,20 @@ export class CommunityService {
       'Content-Type': 'text/plain'
     })
   }
-  community: Community[] = [];
+
   communityUrl: string = 'http://localhost:8080/WebApp/webresources/Community';
   constructor(private http: HttpClient) { }
-
+  getCommunityById(communityId: Number) {
+    return this.http.get<Community>('http://localhost:8080/WebApp/webresources/Community/getCommunityById/' + communityId);
+  }
   getCommunityByUserId(userId: Number) {
-    let url = this.communityUrl + "/communityByUser/" + userId;
-    return this.http.get<Community[]>(url);
+    return this.http.get<Community[]>('http://localhost:8080/WebApp/webresources/Community/communityByUser/' + userId);
   }
   getAllCommunity(): Observable<Community[]> {
-    return this.http.get<Community[]>(this.communityUrl + "/getAllCommunity");
+    return this.http.get<Community[]>("http://localhost:8080/WebApp/webresources/Community/getAllCommunity");
   }
 
-  createSubreddit(communityModel: Community): Observable<Community> {
+  createCommunity(communityModel: Community): Observable<Community> {
     let jsonStr = JSON.stringify(communityModel);
     return this.http.post<Community>(this.communityUrl, jsonStr);
   }

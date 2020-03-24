@@ -1,1 +1,12 @@
-<p>comment works!</p>
+<div *ngFor="let comment of data">
+    <div class="comment">
+        <div class="username">
+            <a routerLink="/user/comment.username">{{comment.username}}</a>
+        </div>
+        <div>
+            <p>{{comment.commentDate}}</p>
+        </div>
+        <b>{{comment.commentDesc}}</b>
+    </div>
+    <hr />
+</div>

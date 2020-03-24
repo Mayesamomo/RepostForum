@@ -1,1 +1,50 @@
-<p>view-post works!</p>
+<div class="reddit-body">
+    <div class="container">
+        <div class="row">
+            <hr />
+            <div class="col-md-9">
+                <div class="row post">
+                    <div class="col-md-1">
+                        <app-votebutton [post]="post"></app-votebutton>
+                    </div>
+                    <div class="col-md-11">
+                        <span class="subreddit-info">
+                            <span class="subreddit-text"><a class="posturl" href="">{{post.communityName}}</a></span>
+                            <span> .Posted by <a class="username" href="">{{post.username}}</a></span>
+                            <span>on {{post.postDate}}</span>
+                        </span>
+                        <hr />
+                        <a href="post.media" class="post-title">{{post.postTitle}}</a>
+                        <img [src]="post.media">
+                        <div>
+                            <p class="post-text">{{post.postDesc}}</p>
+                        </div>
+                        <hr />
+                        <span>
+                            <p>Comment as <a href="">{{post.username}}</a></p>
+                        </span>
+                        <hr />
+                        <div class="post-comment">
+                            <form [formGroup]="commentForm" (ngSubmit)="postComment()">
+                                <div class="form-group">
+                                    <textarea class="form-control" formControlName="commentDesc"
+                                        placeholder="Your Thoughts?"></textarea>
+                                </div>
+                                <button type="submit" class="login float-right">Comment</button>
+                            </form>
+                        </div>
+                        <div>
+                            <div style="margin-top: 60px;">
+                                <comment *ngFor="let comment of comments" [data]="comment"></comment>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <app-sidebar></app-sidebar>
+                <sidebar-view></sidebar-view>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,37 @@
-<p>create-post works!</p>
+<div class="container">
+    <div class="row">
+        <hr />
+        <div class="createpost-container col-md-9">
+            <form class="post-form" [formGroup]="createPostForm" (ngSubmit)="createPost()">
+                <div class="form-group">
+                    <div class="createpost-heading">Create Post</div>
+                    <hr />
+                    <input type="text" formControlName="postTitle" class="form-control" style="margin-top: 5px"
+                        placeholder="Title">
+                    <input type="text" class="form-control" formControlName="media" style="margin-top: 5px"
+                        placeholder="URL">
+                    <select class="form-control" style="margin-top: 10px" formControlName="communityName">
+                        <option value="" selected disabled>Select Community</option>
+                        <option *ngFor="let community of communities">{{community.communityName}}</option>
+                    </select>
+                    <textarea class="form-control" formControlName="postDesc" placeholder="write your post"></textarea>
+                    <span>
+                        <div class="form-check float-left" style="margin-top: 10px">
+                            <input class="form-check-input" type="checkbox" value="" id="commentCheckBox" checked>
+                            <label class="form-check-label" for="commentCheckBox">
+                                Send Comment Notifications
+                            </label>
+                        </div>
+                        <div style="margin-top: 5px" class="float-right">
+                            <button (click)="discardPost()" class="btnCreateSubreddit">Discard</button>
+                            <button class="btnCreatePost">Post</button>
+                        </div>
+                    </span>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <app-guideline></app-guideline>
+        </div>
+    </div>
+</div>

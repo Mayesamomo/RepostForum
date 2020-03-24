@@ -1,17 +1,17 @@
 export class Community {
     communityId: Number;
-    community_name: string;
-    community_desc: string;
-    user_id: number;
+    communityName: string;
+    //community_desc: string;
+    username: string;
     public constructor(
         communityId: Number,
-        community_name: string,
-        community_desc: string,
-        user_id: number) {
+        communityName: string,
+        //community_desc: string,
+        username: string) {
         this.communityId = communityId;
-        this.community_name = community_name;
-        this.community_desc = community_desc;
-        this.user_id = user_id;
+        this.communityName = communityName;
+        //this.community_desc = community_desc;
+        this.username = username;
     }
 }
 
