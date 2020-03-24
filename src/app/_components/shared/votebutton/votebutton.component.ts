@@ -5,6 +5,7 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { VoteService } from 'src/app/_services/vote.service';
 import { PostService } from 'src/app/_services/post.service';
 import { UserService } from 'src/app/_services/user.service';
+import { VoteType } from 'src/app/DTO/vote-type.enum';
 @Component({
   selector: 'app-votebutton',
   templateUrl: './votebutton.component.html',
@@ -13,26 +14,57 @@ import { UserService } from 'src/app/_services/user.service';
 export class VotebuttonComponent implements OnInit {
   @Input() post: Post;
   votePayload: Vote;
-  faArrowUp = faArrowUp;
-  faArrowDown = faArrowDown;
+
   upvoteColor: string;
   downvoteColor: string;
-  vote: { voteType: any; postId: any; };
+  votes: { voteType: any; postId: any; };
   constructor(private voteService: VoteService, private postService: PostService, private authService: UserService) {
-    this.vote = {
+    this.votes = {
       voteType: undefined,
       postId: undefined
     }
     this.voteService.postChange.subscribe((post) => this.post = post);
   }
-  ngOnInit(): void {
-    throw new Error("Method not implemented.");
+
+  ngOnInit() {
+    this.postService.getPostById(this.post.postId).subscribe(post => this.post = post);
+    this.upvoteColor = this.post.upVote ? this.setColorWhenUpVoteAndUserLoggedIn() : "";
+    this.downvoteColor = this.post.downVote ? this.setColorWhenDownVoteAndUserLoggedIn() : "";
   }
 
-  /** *ngOnInit(): void {
-     this.postService.getPostById(this.post.id).subscribe(post => this.post = post);
-     this.upvoteColor = this.post.upVote ? this.setColorWhenUpVoteAndUserLoggedIn() : "";
-     this.downvoteColor = this.post.downVote ? this.setColorWhenDownVoteAndUserLoggedIn() : "";
-   }**/
+
+  upvotePost() {
+    this.votePayload.voteType = VoteType.UPVOTE;
+    this.vote();
+    this.upvoteColor = this.post.upVote ? this.setColorWhenUpVoteAndUserLoggedIn() : "";
+  }
+
+  downvotePost() {
+    this.votePayload.voteType = VoteType.DOWNVOTE;
+    this.vote();
+    this.downvoteColor = this.post.downVote ? this.setColorWhenDownVoteAndUserLoggedIn() : "";
+  }
+
+
+  private vote() {
+    this.votePayload.postId = this.post.id;
+    this.voteService.vote(this.votePayload);
+  }
+
+  private setColorWhenUpVoteAndUserLoggedIn() {
+    if (this.authService.isLoggedIn) {
+      this.downvoteColor = "";
+      return "green";
+    }
+    return "";
+  }
+
+  private setColorWhenDownVoteAndUserLoggedIn() {
+    if (this.authService.isLoggedIn) {
+      this.upvoteColor = "";
+      return "red";
+    }
+    return "";
+  }
 
 }
