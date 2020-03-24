@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div class="reddit-body">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <app-post *ngFor="let post of posts" [post]="post"></app-post>
+            </div>
+            <div class="col-md-3">
+                <app-sidebar></app-sidebar>
+                <sidebar-view></sidebar-view>
+            </div>
+        </div>
+    </div>
+</div>

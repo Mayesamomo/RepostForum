@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Community } from 'src/app/DTO/community';
 
 @Component({
-  selector: 'app-sidebar-view',
+  selector: 'sidebar-view',
   templateUrl: './sidebar-view.component.html',
   styleUrls: ['./sidebar-view.component.css']
 })

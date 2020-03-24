@@ -1,12 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HeaderComponent } from './_components/header/header.component';
-import { PostComponent } from './_components/post/post.component';
 import { HomeComponent } from './_components/shared/home/home.component';
 import { SidebarComponent } from './_components/shared/sidebar/sidebar.component';
 import { SidebarViewComponent } from './_components/shared/sidebar-view/sidebar-view.component';
@@ -21,18 +20,18 @@ import { UserComponent } from './_components/user/user.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ErrorInterceptor } from './_helper/errorinterceptor';
 import { AuthGuard } from './_helper/auth.guard';
-import { CreatePostComponent } from './_components/post/create-post/create-post.component';
-import { ViewPostComponent } from './_components/post/view-post/view-post.component';
+import { CreatePostComponent } from './_components/posts/create-post/create-post.component';
+import { ViewPostComponent } from './_components/posts/view-post/view-post.component';
 import { LoginComponent } from './_components/user/login/login.component';
 import { RegisterComponent } from './_components/user/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './_helper/jwt.interceptor';
+import { PostComponent } from './_components/shared/post/post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    PostComponent,
     HomeComponent,
     SidebarComponent,
     SidebarViewComponent,
@@ -47,7 +46,8 @@ import { JwtInterceptor } from './_helper/jwt.interceptor';
     CreatePostComponent,
     ViewPostComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +57,7 @@ import { JwtInterceptor } from './_helper/jwt.interceptor';
     FontAwesomeModule,
     HttpClientModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

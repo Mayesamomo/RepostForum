@@ -6,6 +6,7 @@ import { VoteService } from 'src/app/_services/vote.service';
 import { PostService } from 'src/app/_services/post.service';
 import { UserService } from 'src/app/_services/user.service';
 import { VoteType } from 'src/app/DTO/vote-type.enum';
+import { AuthService } from 'src/app/_services/auth.service';
 @Component({
   selector: 'app-votebutton',
   templateUrl: './votebutton.component.html',
@@ -18,7 +19,7 @@ export class VotebuttonComponent implements OnInit {
   upvoteColor: string;
   downvoteColor: string;
   votes: { voteType: any; postId: any; };
-  constructor(private voteService: VoteService, private postService: PostService, private authService: UserService) {
+  constructor(private voteService: VoteService, private postService: PostService, private authService: AuthService) {
     this.votes = {
       voteType: undefined,
       postId: undefined
@@ -27,7 +28,7 @@ export class VotebuttonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.postService.getPostById(this.post.postId).subscribe(post => this.post = post);
+    this.postService.getPostById(this.post.postId).subscribe(post => post);
     this.upvoteColor = this.post.upVote ? this.setColorWhenUpVoteAndUserLoggedIn() : "";
     this.downvoteColor = this.post.downVote ? this.setColorWhenDownVoteAndUserLoggedIn() : "";
   }
@@ -47,7 +48,7 @@ export class VotebuttonComponent implements OnInit {
 
 
   private vote() {
-    this.votePayload.postId = this.post.id;
+    this.votePayload.postId = this.post.postId;
     this.voteService.vote(this.votePayload);
   }
 

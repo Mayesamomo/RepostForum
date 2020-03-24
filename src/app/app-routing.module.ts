@@ -5,8 +5,8 @@ import { UserComponent } from './_components/user/user.component';
 import { AllCommunityComponent } from './_components/community/all-community/all-community.component';
 import { ViewCommunityComponent } from './_components/community/view-community/view-community.component';
 import { CreateCommunityComponent } from './_components/community/create-community/create-community.component';
-import { CreatePostComponent } from './_components/post/create-post/create-post.component';
-import { ViewPostComponent } from './_components/post/view-post/view-post.component';
+import { CreatePostComponent } from './_components/posts/create-post/create-post.component';
+import { ViewPostComponent } from './_components/posts/view-post/view-post.component';
 import { LoginComponent } from './_components/user/login/login.component';
 import { RegisterComponent } from './_components/user/register/register.component';
 

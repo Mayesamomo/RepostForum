@@ -6,9 +6,12 @@ export class Post {
     postDate: string;
     media: string;
     status: number;
-    userName: string;
+    username: string;
     communityName: string;
-    votes: number;
+    votesNum: number;
+    upVote: boolean;
+    downVote: boolean;
+    commentNum: number;
 
     public constructor(
         postId: number,
@@ -18,9 +21,12 @@ export class Post {
         postDate: string,
         media: string,
         status: number,
-        userName: string,
+        username: string,
         communityName: string,
-        votes: number
+        votesNum: number,
+        commentNum: number,
+        upVote: boolean,
+        downVote: boolean
     ) {
         this.postId = postId,
             this.userId = userId,
@@ -29,14 +35,17 @@ export class Post {
             this.postDate = postDate,
             this.media = media,
             this.status = status,
-            this.userName = userName,
+            this.username = username,
             this.communityName = communityName,
-            this.votes = votes || 0;
+            this.votesNum = votesNum;
+        this.commentNum = commentNum;
+        this.upVote = upVote;
+        this.downVote = downVote;
     }
-    VoteUp() {
+    /*upVote() {
         this.votes += 1;
     }
-    VoteDown() {
+    downVote() {
         this.votes -= 1;
-    }
+    }*/
 }

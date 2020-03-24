@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit {
-  @Input() data: Post[];
+  @Input() post: Post;
   constructor(private router: Router) { }
 
   ngOnInit(): void {

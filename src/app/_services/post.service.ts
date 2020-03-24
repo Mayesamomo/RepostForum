@@ -24,10 +24,10 @@ export class PostService {
   ) { }
 
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(this.postUrl);
+    return this.http.get<Post[]>(this.postUrl + "/GetAllPost");
   }
 
-  CreatePost(details) {
+  CreatePost(details: Post) {
     let jsonStr = JSON.stringify(details);
     return this.http.post<any>(this.postUrl, jsonStr);
   };

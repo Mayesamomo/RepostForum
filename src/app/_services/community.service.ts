@@ -22,7 +22,7 @@ export class CommunityService {
     return this.http.get<Community[]>(url);
   }
   getAllCommunity(): Observable<Community[]> {
-    return this.http.get<Community[]>(this.communityUrl);
+    return this.http.get<Community[]>(this.communityUrl + "/getAllCommunity");
   }
 
   createSubreddit(communityModel: Community): Observable<Community> {

@@ -9,10 +9,15 @@ import { Post } from 'src/app/DTO/post';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  posts: Post[] = [];
-  constructor(private postService: PostService, private router: Router) { }
+  posts: Post[];
+  constructor(private postService: PostService, private router: Router) {
+
+  }
 
   ngOnInit(): void {
+    this.postService.getPosts().subscribe(post => {
+      this.posts = post;
+    })
   }
 
 }

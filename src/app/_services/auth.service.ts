@@ -18,7 +18,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
   public get currentUserValue(): User {
@@ -29,7 +29,7 @@ export class AuthService {
     return this.http.post(`${this.Apiurl}/login`, { username, password }, this.httpOptions)
       .pipe(map(user => {
         // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-        //user. = window.btoa(username + ':' + password);
+        //user= window.btoa(username + ':' + password);
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(this.users);
         return user;
