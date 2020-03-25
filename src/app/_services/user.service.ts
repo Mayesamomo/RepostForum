@@ -17,7 +17,7 @@ export class UserService {
   }
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'text,plain'
+      'Content-Type': 'text/plain'
     })
   };
 

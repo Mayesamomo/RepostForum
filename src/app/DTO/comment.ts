@@ -1,5 +1,5 @@
 export class Comment {
-    commentID: number;
+    commentId: number;
     userId: number;
     commentDate: string;
     commentDesc: string;
@@ -16,7 +16,7 @@ export class Comment {
         username: string,
     ) {
         this.postId = postId,
-            this.commentID = commentID,
+            this.commentId = commentID,
             this.userId = userId,
             this.commentDate = commentDate,
             this.commentDesc = commentDesc,

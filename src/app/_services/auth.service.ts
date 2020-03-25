@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { User } from '../DTO/user';
+import { LoginPayload } from '../_components/user/login/loginPayload';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  @Output() loggedIn: EventEmitter<Boolean> = new EventEmitter();
+  @Output() username: EventEmitter<string> = new EventEmitter();
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'text,plain'
+      'Content-Type': 'text/plain'
     })
   };
   //isLoggedIn: boolean;
@@ -25,17 +28,16 @@ export class AuthService {
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
-
-  login(username: string, password: string) {
-    return this.http.post(`${this.Apiurl}/login`, { username, password }, this.httpOptions)
-      .pipe(map(user => {
-        // store user details and basic auth credentials in local storage to keep user logged in between page refreshes
-        //user= window.btoa(username + ':' + password);
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject.next(this.users);
-        return user;
-      }));
+  login(loginPayload: LoginPayload): Observable<boolean> {
+    return this.http.post<any>('http://localhost:8080/WebApp/webresources/User/login', loginPayload, this.httpOptions).pipe(map(data => {
+      sessionStorage.setItem('currentUser', JSON.stringify(data));
+      this.currentUserSubject.next(this.users);
+      this.loggedIn.emit(true);
+      this.username.emit(data.username);
+      return data;
+    }));
   }
+
 
   logout() {
     // remove user from local storage to log user out
@@ -43,6 +45,8 @@ export class AuthService {
     this.currentUserSubject.next(null);
   }
   isLoggedIn() {
-    return localStorage.getItem('currentUser');
+    this.loggedIn.emit(false);
+    sessionStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
   }
 }

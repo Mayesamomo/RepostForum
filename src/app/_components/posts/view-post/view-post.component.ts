@@ -7,22 +7,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PostService } from 'src/app/_services/post.service';
 import { AuthService } from 'src/app/_services/auth.service';
 import { User } from 'src/app/DTO/user';
+import { CommentPayload } from './commentPayload';
 @Component({
   selector: 'app-view-post',
   templateUrl: './view-post.component.html',
   styleUrls: ['./view-post.component.css']
 })
 export class ViewPostComponent implements OnInit {
-  currentUser: User;
-  postId: number;
-  userId: number;
-  Validatecomment: any;
   commentForm: FormGroup;
-  commentPayload: Comment;
+  commentPayload: CommentPayload;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
+  postId: Number;
   post: Post;
-  comments: Comment[];
+  comments: CommentPayload[];
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
@@ -32,9 +30,13 @@ export class ViewPostComponent implements OnInit {
   ) {
     this.commentForm = this.formBuilder.group({
       commentDesc: ['', Validators.required],
-      postId: this.route.snapshot.params['postId']
+
     });
-    this.postId = this.route.snapshot.params['postId'];
+    this.postId = this.route.snapshot.params['postId']
+    this.commentPayload = {
+      commentDesc: '',
+      postId: this.route.snapshot.params['postId']
+    }
     this.getCommentsForPost();
   }
 
@@ -46,17 +48,13 @@ export class ViewPostComponent implements OnInit {
     }, error => {
       console.log('Failure ' + error);
     });
-    if (this.authService.currentUserValue !== null) {
-      this.currentUser = this.authService.currentUserValue;
-      this.userId = this.currentUser.userId;
-    }
+
 
   }
 
   postComment() {
-    this.commentForm.get('postDesc').value;
-    this.postService.postComment(this.Validatecomment).subscribe(data => {
-      this.commentForm.get('postDesc').setValue('');
+    this.postService.postComment(this.commentPayload).subscribe(data => {
+      this.commentForm.get('commentDesc').setValue('');
       this.router.navigateByUrl('/view-post/' + this.postId);
     }, error => {
       console.log("Response Failed");
@@ -64,8 +62,8 @@ export class ViewPostComponent implements OnInit {
   }
 
   private getCommentsForPost() {
-    this.postService.getCommentByPostId(this.postId).subscribe(comments => {
-      // this.comments = comments;
+    this.postService.getCommentByPostId(this.postId).subscribe(map => comments => {
+      this.comments = comments;
     }, error => {
       console.log("Failure " + error);
     });

@@ -25,7 +25,6 @@ import { ViewPostComponent } from './_components/posts/view-post/view-post.compo
 import { LoginComponent } from './_components/user/login/login.component';
 import { RegisterComponent } from './_components/user/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JwtInterceptor } from './_helper/jwt.interceptor';
 import { PostComponent } from './_components/shared/post/post.component';
 
 @NgModule({
@@ -59,8 +58,7 @@ import { PostComponent } from './_components/shared/post/post.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [AuthGuard,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

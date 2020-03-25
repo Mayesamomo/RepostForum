@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Post } from '../DTO/post';
 import { CreatePostPayload } from '../_components/posts/create-post/createPostPayLoad';
+import { CommentPayload } from '../_components/posts/view-post/commentPayload';
 
 @Injectable({
   providedIn: 'root'
@@ -29,16 +30,16 @@ export class PostService {
     return this.http.post('http://localhost:8080/WebApp/webresources/Post', postPayload);
   }
 
-  getPostById(postId: Number): Observable<Post[]> {
-    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/singlePost/{postId}' + postId);
+  getPostById(postId): Observable<Post[]> {
+    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/singlePost/' + postId);
   }
 
-  getPostComments(postId: number): Observable<Comment[]> {
+  getPostComments(postId: number): Observable<CommentPayload[]> {
 
-    return this.http.get<Comment[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfPost/' + postId);
+    return this.http.get<CommentPayload[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfPost/' + postId);
   }
 
-  postComment(commentPayload: Comment): Observable<any> {
+  postComment(commentPayload: CommentPayload): Observable<any> {
     return this.http.post<any>('http://localhost:8080/WebApp/webresources/Comment', commentPayload);
   }
 
