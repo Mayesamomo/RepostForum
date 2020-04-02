@@ -29,7 +29,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
   login(loginPayload: LoginPayload): Observable<boolean> {
-    return this.http.post<any>('http://localhost:8080/WebApp/webresources/User/login', loginPayload, this.httpOptions).pipe(map(data => {
+    return this.http.post<any>('http://localhost:8080/repostitRestServer/webresources/User/Login', loginPayload, this.httpOptions).pipe(map(data => {
       sessionStorage.setItem('currentUser', JSON.stringify(data));
       this.currentUserSubject.next(this.users);
       this.loggedIn.emit(true);

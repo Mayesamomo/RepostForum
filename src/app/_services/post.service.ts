@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Post } from '../DTO/post';
 import { CreatePostPayload } from '../_components/posts/create-post/createPostPayLoad';
 import { CommentPayload } from '../_components/posts/view-post/commentPayload';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,30 +18,34 @@ export class PostService {
     })
   }
 
-  postUrl: string = 'http://localhost:8080/WebApp/webresources/Post';
+  postUrl: string = 'http://localhost:8080/repostitRestServer/webresources/post';
   commentUrl: string = 'http://localhost:8080/WebApp/webresources/Comment';
   constructor(private http: HttpClient
   ) { }
 
   getAllPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/GetAllPost');
+    return this.http.get<Post[]>('http://localhost:8080/repostitRestServer/webresources/post/getPosts', this.httpOptions);
   }
 
   createPost(postPayload: CreatePostPayload): Observable<any> {
-    return this.http.post('http://localhost:8080/WebApp/webresources/Post', postPayload);
+    let reg = 'http://localhost:8080/repostitRestServer/webresources/post/makePost'
+    let jsonStr = JSON.stringify(postPayload);
+    return this.http.post<any>(reg, jsonStr).pipe(map(post => {
+      console.log(post);
+    }));
   }
 
   getPostById(postId): Observable<Post[]> {
-    return this.http.get<Post[]>('http://localhost:8080/WebApp/webresources/Post/singlePost/' + postId);
+    return this.http.get<Post[]>('http://localhost:8080/repostitRestServer/webresources/post/getPostId/{id' + postId);
   }
 
   getPostComments(postId: number): Observable<CommentPayload[]> {
 
-    return this.http.get<CommentPayload[]>('http://localhost:8080/WebApp/webresources/Comment/commentsOfPost/' + postId);
+    return this.http.get<CommentPayload[]>('http://localhost:8080/repostitRestServer/webresources/comment/getPostComment/{post_id}' + postId);
   }
 
   postComment(commentPayload: CommentPayload): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/WebApp/webresources/Comment', commentPayload);
+    return this.http.post<any>('http://localhost:8080/repostitRestServer/webresources/comment/CreateComment', commentPayload);
   }
 
 

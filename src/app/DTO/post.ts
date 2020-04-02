@@ -1,10 +1,10 @@
 export class Post {
-    postId: number;
-    userId: number;
-    postTitle: string;
-    postDesc: string;
-    postDate: string;
-    media: string;
+    post_id: number;
+    user_id: number;
+    post_title: string;
+    post_desc: string;
+    post_date: string;
+    filePath: string;
     status: number;
     username: string;
     communityName: string;
@@ -12,6 +12,7 @@ export class Post {
     upVote: boolean;
     downVote: boolean;
     commentNum: number;
+
     /*public constructor(
         postId: number,
         userId: number,

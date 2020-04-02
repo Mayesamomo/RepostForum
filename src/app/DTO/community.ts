@@ -1,9 +1,9 @@
 export class Community {
-    communityId: Number;
+    communityId?: Number;
     communityName: string;
     //community_desc: string;
     username: string;
-    public constructor(
+    /*public constructor(
         communityId: Number,
         communityName: string,
         //community_desc: string,
@@ -12,7 +12,7 @@ export class Community {
         this.communityName = communityName;
         //this.community_desc = community_desc;
         this.username = username;
-    }
+    }*/
 }
 
 

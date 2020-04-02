@@ -1,1 +1,25 @@
-<p>create-community works!</p>
+<div class="container">
+    <div class="row">
+        <div class="createpost-container">
+            <form class="post-form" [formGroup]="createCommunityForm" (ngSubmit)="createCommunity()">
+                <div class="form-group">
+                    <div class="createsubreddit-heading">Create Community</div>
+                    <hr />
+                    <!--<input type="text" formControlName="'title'" class="form-control" style="margin-top: 5px"
+                        placeholder="Title">-->
+                    <textarea type="text" formControlName="communityName" style="width: 100%; margin-top: 5px"
+                        placeholder="Description"></textarea>
+                    <div>
+                        <div style="margin-top: 5px" class="float-right">
+                            <button (click)="discard()" class="btnCreateSubreddit">Discard</button>
+                            <button class="btnCreatePost">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-3">
+            <guidelines></guidelines>
+        </div>
+    </div>
+</div>

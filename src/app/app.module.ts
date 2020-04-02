@@ -26,6 +26,11 @@ import { LoginComponent } from './_components/user/login/login.component';
 import { RegisterComponent } from './_components/user/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostComponent } from './_components/shared/post/post.component';
+import { DashboardComponent } from './Admin/dashboard/dashboard.component';
+import { ListPostsComponent } from './Admin/list-posts/list-posts.component';
+import { ListUsersComponent } from './Admin/list-users/list-users.component';
+import { ListCommentsComponent } from './Admin/list-comments/list-comments.component';
+import { ListCommunityComponent } from './Admin/list-community/list-community.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +51,12 @@ import { PostComponent } from './_components/shared/post/post.component';
     ViewPostComponent,
     LoginComponent,
     RegisterComponent,
-    PostComponent
+    PostComponent,
+    DashboardComponent,
+    ListPostsComponent,
+    ListUsersComponent,
+    ListCommentsComponent,
+    ListCommunityComponent
   ],
   imports: [
     BrowserModule,

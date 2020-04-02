@@ -1,0 +1,23 @@
+.banner{
+    background: center top rgb(51, 168, 255);
+    height: 64px;
+}
+
+.heading{
+    margin:auto;
+}
+.planet{
+    padding: 6px; 
+    border-radius: 24px; 
+    height: 36px; 
+    width: 36px;
+    fill: #ffffff;
+        
+}
+.text{
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 26px;
+    color: #fcfcfb;
+    margin:auto;
+}

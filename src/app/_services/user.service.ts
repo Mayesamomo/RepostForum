@@ -25,10 +25,10 @@ export class UserService {
     return this.currentUserSubject.value;
   }
 
-  Apiurl: string = "http://localhost:8080/WebApp/webresources/User";
+  Apiurl: string = "http://localhost:8080/repostitRestServer/webresources/User";
 
   register(details) {
-    let reg = this.Apiurl + "/register"
+    let reg = this.Apiurl + "/Register"
     let jsonStr = JSON.stringify(details);
     console.log(jsonStr);
     return this.http.post<any>(reg, jsonStr).pipe(map(user => {

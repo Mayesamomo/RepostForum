@@ -1,1 +1,17 @@
-<p>all-community works!</p>
+<div class="reddit-body">
+    <div class="container">
+        <div class="row">
+            <hr />
+            <div class="posts-container col-md-9">
+                <h2>List of Communities</h2>
+                <ul>
+                    <li *ngFor="let community of communities"><a
+                            routerLink="/view-community/{{community.communityId}}">{{community.communityName}}</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <sidebar></sidebar>
+            </div>
+        </div>
+    </div>
+</div>
