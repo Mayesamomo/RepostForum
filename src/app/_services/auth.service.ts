@@ -29,7 +29,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
   login(loginPayload: LoginPayload): Observable<boolean> {
-    return this.http.post<any>('http://localhost:8080/repostitRestServer/webresources/User/Login', loginPayload, this.httpOptions).pipe(map(data => {
+    return this.http.post<any>('http://localhost:8080/WebApp/webresources/User/login', loginPayload, this.httpOptions).pipe(map(data => {
       sessionStorage.setItem('currentUser', JSON.stringify(data));
       this.currentUserSubject.next(this.users);
       this.loggedIn.emit(true);
@@ -41,7 +41,8 @@ export class AuthService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('user_id');
     this.currentUserSubject.next(null);
   }
   isLoggedIn() {

@@ -1,25 +1,28 @@
 <div class="container">
     <div class="row">
-        <div class="createpost-container">
-            <form class="post-form" [formGroup]="createCommunityForm" (ngSubmit)="createCommunity()">
+        <hr />
+        <div class="createpost-container col-md-9">
+            <form class="post-form" [formGroup]="createCommunityForm"
+                (ngSubmit)="createCommunity(createCommunityForm.value)">
                 <div class="form-group">
-                    <div class="createsubreddit-heading">Create Community</div>
+                    <div class="createpost-heading">Create Community</div>
+                    <br>
                     <hr />
-                    <!--<input type="text" formControlName="'title'" class="form-control" style="margin-top: 5px"
-                        placeholder="Title">-->
-                    <textarea type="text" formControlName="communityName" style="width: 100%; margin-top: 5px"
-                        placeholder="Description"></textarea>
-                    <div>
-                        <div style="margin-top: 5px" class="float-right">
-                            <button (click)="discard()" class="btnCreateSubreddit">Discard</button>
-                            <button class="btnCreatePost">Post</button>
-                        </div>
+                    <input type="text" formControlName="community_name" class="form-control" style="margin-top: 5px"
+                        placeholder="Title">
+                    <br>
+                    <br>
+                    <textarea class="form-control" formControlName="community_desc"
+                        placeholder="Community Description"></textarea>
+                    <div style="margin-top: 5px" class="float-right">
+                        <button class="btnCreatePost">Create</button>
                     </div>
+
                 </div>
             </form>
         </div>
         <div class="col-md-3">
-            <guidelines></guidelines>
+            <app-guideline></app-guideline>
         </div>
     </div>
 </div>

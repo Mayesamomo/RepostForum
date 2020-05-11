@@ -1,9 +1,9 @@
 <div class="d-flex flex-column votebox">
     <div class="p-2">
-        <fa-icon (click)="upvotePost()" class="upvote" [icon]="faArrowUp" [style.color]="upvoteColor"></fa-icon>
+        <fa-icon (click)="addLike(1)" class="upvote" [icon]="faArrowUp" [style.color]="upvoteColor"></fa-icon>
     </div>
-    <div class="p-2 votecount">{{post.votesNum}}</div>
+    <div class="p-2 votecount">{{votes}}</div>
     <div class="p-2">
-        <fa-icon (click)="downvotePost()" class="downvote" [icon]="faArrowDown" [style.color]="downvoteColor"></fa-icon>
+        <fa-icon (click)="addLike(0)" class="downvote" [icon]="faArrowDown" [style.color]="downvoteColor"></fa-icon>
     </div>
 </div>

@@ -1,6 +1,8 @@
 export class CreatePostPayload {
-    postTitle: string;
-    postDesc: string;
-    communityName?: string;
-    media?: string;
+  post_title: string;
+  post_description: string;
+  community: number;
+  file_path: string;
+  user_id: number;
+  community_name: string;
 }

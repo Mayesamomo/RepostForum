@@ -1,89 +1,78 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { Post } from 'src/app/DTO/post';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostService } from 'src/app/_services/post.service';
-import { CommentPayload } from './commentPayload';
-import { AuthService } from 'src/app/_services/auth.service';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { Post } from "src/app/DTO/post";
+import { Comment } from "src/app/DTO/comment";
+import { ActivatedRoute, Router } from "@angular/router";
+import { PostService } from "src/app/_services/post.service";
+import { AuthService } from "src/app/_services/auth.service";
+import { User } from "src/app/DTO/user";
+import { CommentPayload } from "./commentPayload";
+import { ToastrService } from "ngx-toastr";
 @Component({
-  selector: 'app-view-post',
-  templateUrl: './view-post.component.html',
-  styleUrls: ['./view-post.component.css']
+  selector: "app-view-post",
+  templateUrl: "./view-post.component.html",
+  styleUrls: ["./view-post.component.css"],
 })
 export class ViewPostComponent implements OnInit {
   commentForm: FormGroup;
   commentPayload: CommentPayload;
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
-  commentCheck;
-  postId;
-  userId: number;
-  currentUser;
-
-  post: Post;
-  comments: CommentPayload[];
+  postId: Number;
+  posts: Post[];
+  comments: Comment[];
+  user_name: String;
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService
   ) {
+    this.postId = this.route.snapshot.params["id"];
+    console.log(this.postId);
+    this.user_name = localStorage.getItem("user_name");
+
     this.commentForm = this.formBuilder.group({
-      userId: '',
-      postId: '',
-      commentDesc: ['', Validators.required],
+      comment_Name: ["", Validators.required],
+      post_id: this.postId,
+      user_id: localStorage.getItem("user_id"),
     });
-    //routing to the post with it's id
-    //this.postId = this.route.snapshot.params['postId']
-    //this.commentPayload = {
-    //commentDesc: '',
-    // postId: this.route.snapshot.params['postId']
-    //}
-    //this.getCommentsForPost();
   }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      this.postId = +params.get('postId');
-
-      let postId = params.get('postId');
-      this.postService.getPostById(postId).subscribe(posts => {
-        this.post = posts;
-      });
-      this.postService.getAllComments(post_id).subscribe(comments => {
-        this.comments = comments;
-      });
+    this.postService.getPostComments(this.postId).subscribe((comment) => {
+      this.comments = comment;
+      console.log(this.comments);
+      console.log("testing");
     });
-    //this.postService.getPostById(this.postId).subscribe(data => {
-    // this.post = data;
-    // console.log(this.post)
-    //}, error => {
-    // console.log('Failure ' + error);
-    //});
-    if (this.authService.currentUserValue !== null) {
-      this.currentUser = this.authService.currentUserValue;
-      this.userId = this.currentUser.userId;
+
+    this.postService.getPostById(this.postId).subscribe((post) => {
+      this.posts = post;
+      console.log(this.posts);
+    });
+  }
+
+  postComment(details) {
+    this.postService.postComment(details).subscribe(
+      (data) => {
+        this.router.navigateByUrl("/view-post/" + this.postId);
+        console.log(data);
+        console.log(details);
+        this.toastr.success("comment submitted!");
+        window.location.reload();
+      },
+      (error) => {
+        console.log("Response Failed");
+      }
+    );
+  }
+
+  /*
+    goToCommunity(){
+      this.router.navigateByUrl("view-community/:id");
     }
-  }
-
-  postComment() {
-    this.commentPayload.commentDesc = this.commentForm.get('commentDesc').value;
-    this.postService.postComment(this.commentPayload).subscribe(() => {
-      this.commentForm.get('commentDesc').setValue('');
-      this.router.navigateByUrl('/view-post/' + this.postId);
-    }, () => {
-      console.log("Response Failed");
-    })
-  }
-
-  //private getCommentsForPost() {
-  //this.postService.getAllComments(this.postId).subscribe(comments => {
-  // this.comments = comments;
-  //}, error => {
-  //  console.log("Failure " + error);
-  //});
-  //}
-
+  */
 }

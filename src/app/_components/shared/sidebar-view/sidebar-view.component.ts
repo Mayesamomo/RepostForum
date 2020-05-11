@@ -15,8 +15,9 @@ export class SidebarViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.communityService.getAllCommunity().subscribe(community => {
+      console.log(community);
       if (community.length > 3) {
-        this.communities = community.splice(0, 2);
+        this.communities = community;
         this.displayViewAll = true;
       } else {
         this.communities = community;

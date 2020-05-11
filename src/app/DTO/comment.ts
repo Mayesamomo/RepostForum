@@ -2,25 +2,27 @@ export class Comment {
     commentId: number;
     userId: number;
     commentDate: string;
-    commentDesc: string;
+    comment_text: string;
     postId: number;
-    username: string;
+    user_name: string;
 
 
     public constructor(
         commentID: number,
         userId: number,
         commentDate: string,
-        commentDesc: string,
+        comment_text: string,
         postId: number,
-        username: string,
+        user_name : string
+      
     ) {
         this.postId = postId,
             this.commentId = commentID,
             this.userId = userId,
             this.commentDate = commentDate,
-            this.commentDesc = commentDesc,
+            this.comment_text = comment_text,
             this.postId = postId,
-            this.username = username
+            this.user_name=user_name
+          
     }
 }

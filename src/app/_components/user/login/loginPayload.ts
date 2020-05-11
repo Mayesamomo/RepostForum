@@ -1,4 +1,4 @@
 export interface LoginPayload {
-    username: String,
+    user_name: String,
     password: String
 }

@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../DTO/user';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
   isLoggedIn: boolean;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,private router: Router) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -38,19 +39,19 @@ export class UserService {
     }));
   }
 
-  /**  login(username: string, password: string) {
- 
-     return this.http.post<any>(this.Apiurl + "/login", { username, password }, this.httpOptions)
-       .pipe(map(user => {
-         if (user) {
-           // store user details in local storage to keep user logged in
-           localStorage.setItem('currentUser', JSON.stringify(user));
-           this.currentUserSubject.next(user);
-           this.isLoggedIn = true;
-         }
-         return user;
-       }));
-   }**/
+  login(user_name: String, password: String) {
+    return this.http.post<any>(this.Apiurl + "/Login", { user_name, password }, this.httpOptions)
+      .pipe(map(user => {
+        if (user) {
+          // store user details in local storage to keep user logged in
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+          this.isLoggedIn = true;
+        }
+        console.log(JSON.stringify(user));
+        return user;
+      }));
+  }
   editUserDetails(details) {
     let reg = this.Apiurl + "/editUser"
     let jsonStr = JSON.stringify(details);

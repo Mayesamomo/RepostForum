@@ -1,1 +1,48 @@
-<p>user works!</p>
+<div class="container">
+    <div>
+
+        You can check your post and comment history below.
+    </div>
+    <hr />
+    <div>
+        Your Posts:
+    </div>
+    <div *ngFor="let post of posts" [post]="post" class="reddit-body">
+        <div class="container">
+            <div class="row">
+                <hr />
+                <div class="col-md-9">
+                    <div class="row post">
+                        <div class="col-md-1">
+                            <app-votebutton [post]="post"></app-votebutton>
+                        </div>
+                        <div class="col-md-11">
+                            <span class="subreddit-info">
+                                <span class="subreddit-text"><a class="posturl" href="">{{post.community}}</a></span>
+                                <span> .Posted by <a class="username" href="">{{post.user_name}}</a></span>
+                                <span> on {{post.post_date}}</span>
+                            </span>
+                            <hr />
+                            <a href="post.media" class="post-title">{{post.post_title}}</a>
+                            <img [src]="post.media">
+                            <div>
+                                <p class="post-text">{{post.post_description}}</p>
+                            </div>
+                            <hr />
+                            <span>
+                                <p>Comment as <a href="">{{post.user_name}}</a></p>
+                            </span>
+                            <hr />
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div>
+        Your Comments:
+    </div>
+
+</div>

@@ -14,19 +14,35 @@
                     REPOSTIT
                 </span>
             </a>
+
+        </div>
+        <div>
+            <form class="post-form" [formGroup]="searchCommunityForm"
+                (ngSubmit)="searchCommunity(searchCommunityForm.value)">
+                <div class="form-group">
+
+                    <input type="text" formControlName="commTitle" class="form-control" style="margin-top: 5px"
+                        placeholder="Title">
+
+                    <button class="btnCreatePost">Search</button>
+                </div>
+            </form>
         </div>
         <div class="flex-grow-1 float-right">
-            <div *ngIf="currentUser" ngbDropdown class="float-right">
+            <div *ngIf="user_name" ngbDropdown class="float-right">
                 <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                     <button ngbDropdownItem (click)="gotoProfile()">Profile</button>
                     <button (click)="logout()" ngbDropdownItem>Logout</button>
                 </div>
+
                 <button class="userdetails" id="dropdownBasic1" ngbDropdownToggle>
                     <img class="account-icon" src="https://www.redditstatic.com/avatars/avatar_default_08_D4E815.png">
-                    {{currentUser}}
+                    {{user_name}}
                 </button>
+                <div *ngIf="adminCheck"><a [routerLink]="['/Dash']">Admin Tools</a></div>
             </div>
-            <div *ngIf="!currentUser">
+
+            <div *ngIf="!user_name">
                 <a routerLink="/signup" class="float-right signup mr-2">Sign up</a>
                 <a routerLink="/login" class="float-right login mr-2">Login</a>
             </div>

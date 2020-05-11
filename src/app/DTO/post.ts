@@ -1,45 +1,33 @@
 export class Post {
     post_id: number;
-    user_id: number;
     post_title: string;
     post_desc: string;
     post_date: string;
-    filePath: string;
-    status: number;
+    user_id: number;
+    community_id: number;
+    file_path: string;
     username: string;
-    communityName: string;
-    votesNum: number;
-    upVote: boolean;
-    downVote: boolean;
-    commentNum: number;
 
-    /*public constructor(
-        postId: number,
-        userId: number,
-        postTitle: string,
-        postDesc: string,
-        postDate: string,
-        media: string,
-        status: number,
+
+    public constructor(
+        post_id: number,
+        post_title: string,
+        post_desc: string,
+        post_date: string,
+        user_id: number,
+        community_id: number,
+        file_path: string,
         username: string,
-        communityName: string,
-        votesNum: number,
-        commentNum: number,
-        upVote: boolean,
-        downVote: boolean
+
+
     ) {
-        this.postId = postId,
-            this.userId = userId,
-            this.postTitle = postTitle,
-            this.postDesc = postDesc,
-            this.postDate = postDate,
-            this.media = media,
-            this.status = status,
-            this.username = username,
-            this.communityName = communityName,
-            this.votesNum = votesNum;
-        this.commentNum = commentNum;
-        this.upVote = upVote;
-        this.downVote = downVote;
-    }*/
+            this.post_id = post_id,
+            this.post_title = post_title,
+            this.post_desc = post_desc,
+            this.post_date = post_date,
+            this.user_id = user_id,
+            this.community_id = community_id,
+            this.file_path = file_path,
+            this.username = username
+    }
 }

@@ -1,33 +1,37 @@
-<div class="reddit-body">
+<div *ngFor="let post of posts" [post]="post" class="reddit-body">
     <div class="container">
         <div class="row">
             <hr />
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="row post">
                     <div class="col-md-1">
-                        <app-votebutton *ngFor="let post of post" [post]="post"></app-votebutton>
+                        <app-votebutton [post]="post"></app-votebutton>
                     </div>
                     <div class="col-md-11">
                         <span class="subreddit-info">
-                            <span class="subreddit-text"><a class="posturl" href="">{{post.communityName}}</a></span>
-                            <span> .Posted by <a class="username" href="">{{post.username}}</a></span>
-                            <span>on {{post.postDate}}</span>
+                            <span class="subreddit-text"><a class="posturl" href="">{{post.community}}</a></span>
+                            <span> .Posted by <a class="username" href="">{{post.user_name}} </a></span>
+                            <span> on {{post.post_date}}</span>
                         </span>
                         <hr />
-                        <a href="post.media" class="post-title">{{post.postTitle}}</a>
-                        <img [src]="post.media">
+                        <a href="post.media" class="post-title">{{post.post_title}}</a>
+                        <br>
+                        <div class="container border" style="background-size:100%">
+                            <img [src]=[post.file_path]>
+                        </div>
+
                         <div>
-                            <p class="post-text">{{post.postDesc}}</p>
+                            <p class="post-text">innerHtml="{{post.post_description}}"</p>
                         </div>
                         <hr />
                         <span>
-                            <p>Comment as <a href="">{{post.username}}</a></p>
+                            <p>Comment as <a href="">{{user_name}}</a></p>
                         </span>
                         <hr />
                         <div class="post-comment">
-                            <form [formGroup]="commentForm" (ngSubmit)="postComment()">
+                            <form [formGroup]="commentForm" (ngSubmit)="postComment(commentForm.value)">
                                 <div class="form-group">
-                                    <textarea class="form-control" formControlName="commentDesc"
+                                    <textarea class="form-control" formControlName="comment_Name"
                                         placeholder="Your Thoughts?"></textarea>
                                 </div>
                                 <button type="submit" class="login float-right">Comment</button>
@@ -35,15 +39,16 @@
                         </div>
                         <div>
                             <div style="margin-top: 60px;">
-                                <comment *ngFor="let comment of comments" [data]="comment"></comment>
+
+                                <div class="card" style="margin-bottom:20px; color:black"
+                                    *ngFor="let comment of comments" [data]="comments">
+                                    <p>{{comment.comment_text}}</p>
+                                    <span>Posted by <a class="username" href="">{{comment.username}} </a></span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <app-sidebar></app-sidebar>
-                <sidebar-view></sidebar-view>
             </div>
         </div>
     </div>

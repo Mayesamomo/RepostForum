@@ -4,6 +4,8 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { PostService } from 'src/app/_services/post.service';
 import { CommunityService } from 'src/app/_services/community.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-view-community',
@@ -13,27 +15,47 @@ import { CommunityService } from 'src/app/_services/community.service';
 export class ViewCommunityComponent implements OnInit {
   faArrowUp = faArrowUp;
   faArrowDown = faArrowDown;
-  communityId: Number;
-  communityName: string;
+  communityId: String;
+  communityName: string[];
   posts: Post[];
+  sub: Subscription;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private postService: PostService,
     private communityService: CommunityService) {
-    this.communityId = this.activatedRoute.snapshot.params['communityId'];
-    this.communityService.getCommunityById(this.communityId).subscribe(data => {
-      this.communityName = data.communityName;
-    }, error => {
+      this.route.queryParams.subscribe(params => {
+        this.communityName = params['cname'];
+        console.log(params['cname'])
+        
+    });
 
-    })
-    this.postService.getAllPostsByCommunity(this.communityId).subscribe(data => {
-      this.posts = data;
-    }, error => {
-      console.log(error);
-    })
+    this.communityId = this.route.snapshot.params['id'];
+    
+    console.log(this.communityId)
+    console.log(this.communityName)
+
+
+    if(this.communityId != null){
+      this.postService.getAllPostsByCommunity(this.communityId).subscribe(data => {
+        this.posts = data;
+        console.log(this.posts)
+      }, error => {
+        console.log(error);
+      })
+    }else if(this.communityName != null){
+      this.postService.getPostByCommName(this.communityName.toString()).subscribe(data =>{
+        this.posts=data;
+        console.log(this.posts)
+      }, error => {
+        console.log(error);
+      })
+    
+    }
+   
   }
 
   ngOnInit(): void {
+    
   }
 
 }

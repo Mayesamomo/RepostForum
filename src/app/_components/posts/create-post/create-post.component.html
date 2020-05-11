@@ -1,37 +1,53 @@
 <div class="container">
-    <div class="row">
-        <hr />
-        <div class="createpost-container col-md-9">
-            <form class="post-form" [formGroup]="createPostForm" (ngSubmit)="createPost()">
-                <div class="form-group">
-                    <div class="createpost-heading">Create Post</div>
-                    <hr />
-                    <input type="text" formControlName="postTitle" class="form-control" style="margin-top: 5px"
-                        placeholder="Title">
-                    <input type="file" class="form-control" formControlName="media" style="margin-top: 5px"
-                        placeholder="URL">
-                    <select class="form-control" style="margin-top: 10px" formControlName="communityName">
-                        <option value="" selected disabled>Select Community</option>
-                        <option *ngFor="let community of communities">{{community.communityName}}</option>
-                    </select>
-                    <textarea class="form-control" formControlName="postDesc" placeholder="write your post"></textarea>
-                    <span>
-                        <div class="form-check float-left" style="margin-top: 10px">
-                            <input class="form-check-input" type="checkbox" value="" id="commentCheckBox" checked>
-                            <label class="form-check-label" for="commentCheckBox">
-                                Send Comment Notifications
-                            </label>
-                        </div>
-                        <div style="margin-top: 5px" class="float-right">
-                            <button (click)="discardPost()" class="btnCreateSubreddit">Discard</button>
-                            <button class="btnCreatePost">Post</button>
-                        </div>
-                    </span>
-                </div>
-            </form>
+  <div class="row">
+    <hr />
+    <div class="createpost-container col-md-9">
+      <form class="post-form" [formGroup]="createPostForm" (ngSubmit)="createPost(createPostForm.value)">
+        <div class="form-group">
+          <div class="createpost-heading">Create Post</div>
+          <hr />
+          <input type="text" formControlName="post_title" class="form-control" style="margin-top: 5px;"
+            placeholder="Title" />
+          <br />
+          <input type="file" multiple="multiple" accept="image/*" (change)="getBase64($event)" />
+          <select class="form-control" style="margin-top: 10px;" formControlName="community">
+            <option [community]="community" *ngFor="let community of communities" formControlName="community">
+              {{ community.community_name }}</option>
+          </select>
+          <br />
+          <editor formControlName="post_description" placeholder="write your post" [init]="{
+              height: 500,
+              menubar: false,
+              plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+              ],
+              toolbar:
+                'undo redo | formatselect | bold italic backcolor | \
+                          alignleft aligncenter alignright alignjustify | \
+                          bullist numlist outdent indent | removeformat | help'
+            }"></editor>
+          <!--<textarea class="form-control" formControlName="post_description" placeholder="write your post"></textarea>-->
+          <span>
+            <div class="form-check float-left" style="margin-top: 10px;">
+              <input class="form-check-input" type="checkbox" value="" id="commentCheckBox" checked />
+              <label class="form-check-label" for="commentCheckBox">
+                Send Comment Notifications
+              </label>
+            </div>
+            <div style="margin-top: 5px;" class="float-right">
+              <button (click)="discardPost()" class="btnCreateSubreddit">
+                Discard
+              </button>
+              <button class="btnCreatePost">Post</button>
+            </div>
+          </span>
         </div>
-        <div class="col-md-3">
-            <app-guideline></app-guideline>
-        </div>
+      </form>
     </div>
+    <div class="col-md-3">
+      <app-guideline></app-guideline>
+    </div>
+  </div>
 </div>

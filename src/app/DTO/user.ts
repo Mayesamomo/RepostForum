@@ -2,29 +2,29 @@ import { UserType } from './user-type.enum';
 
 export class User {
     userId: number;
-    profileId: number;
-    username: string;
-    email: string;
     fullName: string;
+    user_name: string;
+    email: string;
+    password: string;
     userType: UserType;
     status: boolean;
-    authdata?: string;
+    date: string;
     public constructor(
         userId: number,
-        profileId: number,
-        username: string,
-        email: string,
         fullName: string,
+        user_name: string,
+        email: string,
+        password: string,
         userType: UserType,
         status: boolean,
-        authdata?: string,
+
     ) {
         this.userId = userId;
-        this.profileId = profileId;
-        this.username = username;
+        this.user_name = user_name;
         this.email = email;
+        this.password= password;
         this.fullName = fullName;
         this.userType = userType;
-        this.authdata = authdata;
+        this.status = status
     }
 }
